@@ -1,0 +1,1 @@
+uncrustify  -c prety.cfg --no-backup {{FILENAME}}

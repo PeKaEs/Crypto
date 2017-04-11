@@ -1,19 +1,75 @@
 #include <stdio.h>
 #include <string.h>
 #include <openssl/sha.h>
+#include "FileEnc.hpp"
+#include <string>
+#include <iostream>
+#include <stdlib.h>
 
-int main()
+using namespace std;
+
+void showUsage(char *entry){
+cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eo, ch}" << endl;
+}
+
+bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifier,string filePath){
+  if (encMode == "" || keystorePath == "" || keyIdentifier == "" || filePath == "")
+    return false;
+  return true;
+}
+
+int main(int argc, char *argv[])
 {
-    unsigned char ibuf[] = "compute sha1";
-    unsigned char obuf[20];
+    string encMode,keystorePath,keyIdentifier,specMode,filePath;
+    encMode=keystorePath=keyIdentifier=specMode=filePath="";
 
-    SHA1(ibuf, strlen((const char*)ibuf), obuf);
+    FileEnc encEngine;
 
-    int i;
-    for (i = 0; i < 20; i++) {
-        printf("%02x ", obuf[i]);
+    for (int i = 1; i < argc; i++) {
+        if (string("-m") == argv[i]) {
+            if (i < argc - 1) {
+                encMode = argv[i + 1];
+                i++;
+            }
+        } else if (string("-c") == argv[i]) {
+          if (i < argc - 1) {
+            keystorePath = argv[i + 1];
+            i++;
+          }
+        } else if (string("-k") == argv[i]) {
+          if (i < argc - 1) {
+            keyIdentifier = argv[i + 1];
+            i++;;
+          }
+        } else if (string("-s") == argv[i]) {
+          if (i < argc - 1) {
+            specMode = argv[i + 1];
+            i++;
+          }
+        } else if (string("-f") == argv[i]) {
+          if (i < argc - 1) {
+            filePath = argv[i + 1];
+            i++;
+          }
+        } else {
+            showUsage(argv[0]);
+            return 0;
+        }
     }
-    printf("\n");
+    if (!areEveryArgsSpecified(encMode,keystorePath,keyIdentifier,filePath)) {
+        showUsage(argv[0]);
+        return 0;
+    }
+
+    encEngine.set_encMode(encMode);
+    encEngine.set_keystorePath(keystorePath);
+    encEngine.set_keyIdentifier(keyIdentifier);
+    encEngine.set_specMode(specMode);
+    encEngine.set_filePath(filePath);
+
+    encEngine.debugInfo();
+
+    encEngine.run();
 
     return 0;
 }

@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <openssl/aes.h>
 #include <cstdlib>
+#include <fcntl.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -16,7 +18,8 @@ class FileEnc{
   string specMode;
   string filePath;
 
-  void encryptFile();
+  void encryptFile(int encMode);
+
 
 public:
   FileEnc();

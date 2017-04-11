@@ -28,35 +28,45 @@ void FileEnc::debugInfo(){
 
 void FileEnc::run(){
   if(specMode != ""){
-    //todo
+    if(specMode == "dec")
+      encryptFile(AES_DECRYPT);
     return;
   } else {
-    if(specMode == "dec"){
-      return;
-    }
-    encryptFile();
+    encryptFile(AES_ENCRYPT);
     return;
   }
 
 
 }
 
-void FileEnc::encryptFile(){
+unsigned char* getTrueRandom(unsigned char* tmp, size_t size){
+  int randomData = open("/dev/random", O_RDONLY);
+  size_t randomDataLen = 0;
+  while (randomDataLen < size)
+  {
+      ssize_t result = read(randomData, tmp + randomDataLen, size - randomDataLen);
+      if (result < 0)
+      {
+        fputs ("Unable to read dev/random\n",stderr); exit (5);
+      }
+      randomDataLen += result;
+    }
+    close(randomData);
+}
+
+void FileEnc::encryptFile(int encMode){
   FILE *pFileToEncrypt, *pKeystoreFile;
   FILE *pEncrypted;
   long keystoreFileSize;
   int iKeyIdentifier = atoi( keyIdentifier.c_str() );
   size_t result;
   int num = 0;
-  int encMode;
-  if (specMode == "dec"){ encMode = AES_ENCRYPT; } else { encMode = AES_DECRYPT; }
-  printf("%d\n",specMode );
 
   int bytes_read, bytes_written;
   unsigned char indata[AES_BLOCK_SIZE];
   unsigned char outdata[AES_BLOCK_SIZE];
 
-  unsigned char ckey[AES_BLOCK_SIZE];
+  unsigned char ckey[] = "dontusethisinput";
   unsigned char ivec[] = "dontusethisinput";
 
   AES_KEY key;
@@ -69,6 +79,19 @@ void FileEnc::encryptFile(){
 
   pKeystoreFile = fopen ( keystorePath.c_str() , "rb" );
       if (pKeystoreFile == NULL) {fputs ("Keystore fault, check path\n",stderr); exit (2);}
+
+  if(encMode == AES_DECRYPT){
+    bytes_read = fread(ivec, 1, sizeof(ivec), pFileToEncrypt);
+    if( bytes_read < 17 ) {fputs ("No IV in file\n",stderr); exit (6);}
+    printf("Dec %s\n",ivec );
+
+  } else if (encMode == AES_ENCRYPT){
+    getTrueRandom(ivec, sizeof(ivec));
+    bytes_written = fwrite(ivec, 1, sizeof(ivec), pEncrypted);
+    if( bytes_written < 17 ) {fputs ("Cannot store IV in file\n",stderr); exit (7);}
+    printf("Enc %s\n",ivec );
+
+  }
 
   fseek (pKeystoreFile , 0 , SEEK_END);
   keystoreFileSize = ftell (pKeystoreFile);

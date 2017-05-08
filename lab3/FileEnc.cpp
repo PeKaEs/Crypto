@@ -54,17 +54,35 @@ unsigned char* getTrueRandom(unsigned char* tmp, size_t size){
     close(randomData);
 }
 
+long FileEnc::get_file_length( FILE *file ) {
+    fpos_t position; // fpos_t may be a struct and store multibyte info
+    long length; // break support for large files on 32-bit systems
+
+    fgetpos( file, &position ); // save previous position in file
+
+    if ( fseek( file, 0, SEEK_END ) // seek to end
+        || ( length = ftell( file ) ) == -1 ) { // determine offset of end
+        perror( "Finding file length" ); // handle overflow
+    }
+
+    fsetpos( file, &position ); // restore position
+
+    return length;
+}
+
 void FileEnc::encryptFile(int encMode){
-  FILE *pFileToEncrypt, *pKeystoreFile;
-  FILE *pEncrypted;
+  FILE *pFileToEncrypt, *pKeystoreFile, *pEncrypted;
   long keystoreFileSize;
   int iKeyIdentifier = atoi( keyIdentifier.c_str() );
   size_t result;
   int num = 0;
 
   int bytes_read, bytes_written;
-  unsigned char indata[AES_BLOCK_SIZE];
-  unsigned char outdata[AES_BLOCK_SIZE];
+  //unsigned char indata[AES_BLOCK_SIZE];
+  //unsigned char outdata[AES_BLOCK_SIZE];
+
+  unsigned char *indata,*outdata;
+  long indata_size = 0, outdata_size = 0;
 
   unsigned char ckey[] = "dontusethisinput";
   unsigned char ivec[] = "dontusethisinput";
@@ -84,14 +102,18 @@ void FileEnc::encryptFile(int encMode){
     bytes_read = fread(ivec, 1, sizeof(ivec), pFileToEncrypt);
     if( bytes_read < 17 ) {fputs ("No IV in file\n",stderr); exit (6);}
     printf("Dec %s\n",ivec );
+    indata_size = outdata_size = get_file_length( pFileToEncrypt );
 
   } else if (encMode == AES_ENCRYPT){
     getTrueRandom(ivec, sizeof(ivec));
     bytes_written = fwrite(ivec, 1, sizeof(ivec), pEncrypted);
     if( bytes_written < 17 ) {fputs ("Cannot store IV in file\n",stderr); exit (7);}
     printf("Enc %s\n",ivec );
-
+    indata_size = outdata_size = get_file_length( pFileToEncrypt );
   }
+
+  indata = new unsigned char[indata_size];
+  outdata = new unsigned char[outdata_size];
 
   fseek (pKeystoreFile , 0 , SEEK_END);
   keystoreFileSize = ftell (pKeystoreFile);
@@ -104,7 +126,7 @@ void FileEnc::encryptFile(int encMode){
     if (result != iKeyIdentifier*AES_BLOCK_SIZE) {fputs ("Reading key store error",stderr); exit (4);}
 
   AES_set_encrypt_key(ckey, 128, &key);
-
+/*
   while (1) {
     bytes_read = fread(indata, 1, AES_BLOCK_SIZE, pFileToEncrypt);
 
@@ -114,9 +136,19 @@ void FileEnc::encryptFile(int encMode){
     if (bytes_read < AES_BLOCK_SIZE)
   break;
   }
+*/
+  if (fread(indata, 1, indata_size, pFileToEncrypt)){
+    AES_cfb128_encrypt(indata, outdata, indata_size, &key, ivec, &num, encMode);
+
+    if(!fwrite(outdata, 1, outdata_size, pEncrypted)){
+        fputs ("Writing error",stderr); exit (5);
+    }
+  }
 
   fclose(pFileToEncrypt);
   fclose(pKeystoreFile);
   fclose(pEncrypted);
+  delete indata;
+  delete outdata;
 
 }

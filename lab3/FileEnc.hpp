@@ -19,6 +19,7 @@ class FileEnc{
   string filePath;
 
   void encryptFile(int encMode);
+  long get_file_length( FILE *file );
 
 
 public:

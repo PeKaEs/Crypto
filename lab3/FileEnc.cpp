@@ -2,6 +2,9 @@
 
 FileEnc::FileEnc(){
   encMode = keystorePath = keyIdentifier = specMode ="";
+  pKeystoreFile = pFileToEncrypt = pEncrypted = NULL;
+  aesOperation = AES_ENCRYPT;
+  indata_size = outdata_size = 0;
 }
 
 void FileEnc::set_encMode(string enc){
@@ -15,6 +18,8 @@ void FileEnc::set_keyIdentifier(string keyI){
 }
 void FileEnc::set_specMode(string spec){
   specMode = spec;
+  if(spec == "dec")
+    aesOperation = AES_DECRYPT;
 }
 
 void FileEnc::set_filePath(string file){
@@ -27,16 +32,16 @@ void FileEnc::debugInfo(){
 }
 
 void FileEnc::run(){
-  if(specMode != ""){
-    if(specMode == "dec")
-      encryptFile(AES_DECRYPT);
-    return;
-  } else {
-    encryptFile(AES_ENCRYPT);
-    return;
-  }
+    openFiles();
+    menageIvs();
+    setBuffs();
+    set_encryption_key();
 
+    encryptFile();
 
+    deleteBuffs();
+    closeFiles();
+    reset();
 }
 
 void FileEnc::getTrueRandom(){
@@ -56,20 +61,20 @@ void FileEnc::getTrueRandom(){
 }
 
 long FileEnc::get_file_length( FILE *file ) {
-    fpos_t position; // fpos_t may be a struct and store multibyte info
-    long length; // break support for large files on 32-bit systems
+    fpos_t position;
+    long length;
     long prevPos = ftell( file );
 
-    fgetpos( file, &position ); // save previous position in file
-    printf("Curr pos: %d\n",ftell( file ));
-    if ( fseek( file, 0, SEEK_END ) // seek to end
-        || ( length = ftell( file ) ) == -1 ) { // determine offset of end
-        perror( "Finding file length" ); // handle overflow
+    fgetpos( file, &position );
+
+    if ( fseek( file, 0, SEEK_END )
+        || ( length = ftell( file ) ) == -1 ) {
+        perror( "Finding file length" ); 
     }
 
-    fsetpos( file, &position ); // restore position
+    fsetpos( file, &position );
     length -= prevPos;
-    printf("Length: %d\n",length);
+
     return length;
 }
 
@@ -78,7 +83,7 @@ long FileEnc::get_file_length( FILE *file ) {
     int iKeyIdentifier = atoi( keyIdentifier.c_str() );
     long keystoreFileSize;
     size_t result;
-    unsigned char ckey[] = "dontusethisinput";
+    unsigned char ckey[16];
 
     pKeystoreFile = fopen ( keystorePath.c_str() , "rb" );
         if (pKeystoreFile == NULL) {fputs ("Keystore fault, check path\n",stderr); exit (2);}
@@ -98,21 +103,16 @@ long FileEnc::get_file_length( FILE *file ) {
     fclose(pKeystoreFile);
   }
 
-void FileEnc::encryptFile(int aesOperation){
-  int num = 0;
-
-  int bytes_read, bytes_written;
-
-  unsigned char *indata,*outdata;
-  long indata_size = 0, outdata_size = 0;
-
-  //unsigned char ivec[] = "dontusethisinput";
-
-
+void FileEnc::openFiles(){
   pEncrypted = fopen((filePath+".en").c_str(), "ab");
+      if (pEncrypted == NULL) {fputs ("Encrypted file fault, check path\n",stderr); exit (1);}
 
   pFileToEncrypt = fopen ( filePath.c_str() , "rb" );
       if (pFileToEncrypt == NULL) {fputs ("File to encrypt fault, check path\n",stderr); exit (1);}
+  }
+
+void FileEnc::menageIvs(){
+  int bytes_read, bytes_written;
 
   if(aesOperation == AES_DECRYPT){
     bytes_read = fread(ivec, 1, sizeof(ivec), pFileToEncrypt);
@@ -127,11 +127,39 @@ void FileEnc::encryptFile(int aesOperation){
     printf("Enc %s\n",ivec );
     indata_size = outdata_size = get_file_length( pFileToEncrypt );
   }
+  }
 
-  indata = new unsigned char[indata_size];
-  outdata = new unsigned char[outdata_size];
+void FileEnc::reset(){
+  encMode = keystorePath = keyIdentifier = specMode ="";
+  pKeystoreFile = pFileToEncrypt = pEncrypted = NULL;
+  aesOperation = AES_ENCRYPT;
+  indata_size = outdata_size = 0;
+}
 
-  set_encryption_key();
+void FileEnc::setBuffs(){
+  if(indata_size && outdata_size){
+    indata = new unsigned char[indata_size];
+    outdata = new unsigned char[outdata_size];
+  }else{
+    fputs ("Cannot allocate memory\n",stderr); exit (8);
+  }
+}
+void FileEnc::deleteBuffs(){
+  delete indata;
+  delete outdata;
+}
+
+void FileEnc::closeFiles(){
+  if(pFileToEncrypt && pEncrypted){
+    fclose(pFileToEncrypt);
+    fclose(pEncrypted);
+  }else{
+    fputs ("Cannot close files NULL pointer exception\n",stderr); exit (9);
+  }
+}
+
+void FileEnc::encryptFile(){
+  int num = 0;
 
   if (fread(indata, 1, indata_size, pFileToEncrypt)){
 
@@ -148,12 +176,5 @@ void FileEnc::encryptFile(int aesOperation){
         fputs ("Writing error",stderr); exit (5);
     }
   }
-
-  delete indata;
-  delete outdata;
-
-  fclose(pFileToEncrypt);
-  fclose(pEncrypted);
-
 
 }

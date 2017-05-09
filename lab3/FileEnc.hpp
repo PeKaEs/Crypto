@@ -17,17 +17,26 @@ class FileEnc{
   string keyIdentifier;
   string specMode;
   string filePath;
+  int aesOperation;
 
   AES_KEY encKey;
 
   FILE *pKeystoreFile, *pFileToEncrypt, *pEncrypted;
 
+  unsigned char *indata,*outdata;
+  long indata_size, outdata_size;
+
   unsigned char ivec[16];
 
-  void encryptFile(int encMode);
+  void encryptFile();
   long get_file_length( FILE *file );
   void set_encryption_key();
   void getTrueRandom();
+  void openFiles();
+  void closeFiles();
+  void menageIvs();
+  void setBuffs();
+  void deleteBuffs();
 
 
 public:
@@ -38,6 +47,7 @@ public:
   void set_specMode(string spec);
   void set_filePath(string file);
   void run();
+  void reset();
 
   void debugInfo();
 };

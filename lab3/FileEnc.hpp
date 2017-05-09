@@ -18,8 +18,16 @@ class FileEnc{
   string specMode;
   string filePath;
 
+  AES_KEY encKey;
+
+  FILE *pKeystoreFile, *pFileToEncrypt, *pEncrypted;
+
+  unsigned char ivec[16];
+
   void encryptFile(int encMode);
   long get_file_length( FILE *file );
+  void set_encryption_key();
+  void getTrueRandom();
 
 
 public:

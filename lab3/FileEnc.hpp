@@ -7,7 +7,6 @@
 #include <cstdlib>
 #include <fcntl.h>
 #include <unistd.h>
-#include <CkJavaKeyStoreU.h>
 
 using namespace std;
 

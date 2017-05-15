@@ -58,3 +58,5 @@ void RC4::ksaAlg(){
 
   }
 }
+
+void RC4::prgaAlg()

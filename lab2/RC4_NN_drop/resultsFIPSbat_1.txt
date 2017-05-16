@@ -1,0 +1,828 @@
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_64K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7372        1 - eps1       Fail
+ Poker              3635.96          eps         Fail
+
+ 0 Runs, length 1:     1278                      Fail
+ 0 Runs, length 2:     1085                      Fail
+ 0 Runs, length 3:      767                      Fail
+ 0 Runs, length 4:      459                      Fail
+ 0 Runs, length 5:      318                      Fail
+ 0 Runs, length 6+:     457                      Fail
+
+ 1 Runs, length 1:     2552                      Pass
+ 1 Runs, length 2:     1070                      Fail
+ 1 Runs, length 3:      438                      Fail
+ 1 Runs, length 4:      197                      Fail
+ 1 Runs, length 5:       64                      Fail
+ 1 Runs, length 6+:      43                      Fail
+
+ Longest run of 0:       23         1.2e-3       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_64K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit              10007           0.46       Pass
+ Poker                 8.13           0.92       Pass
+
+ 0 Runs, length 1:     2499                      Pass
+ 0 Runs, length 2:     1244                      Pass
+ 0 Runs, length 3:      632                      Pass
+ 0 Runs, length 4:      310                      Pass
+ 0 Runs, length 5:      145                      Pass
+ 0 Runs, length 6+:     161                      Pass
+
+ 1 Runs, length 1:     2511                      Pass
+ 1 Runs, length 2:     1237                      Pass
+ 1 Runs, length 3:      606                      Pass
+ 1 Runs, length 4:      321                      Pass
+ 1 Runs, length 5:      156                      Pass
+ 1 Runs, length 6+:     161                      Pass
+
+ Longest run of 0:       16           0.14       Pass
+ Longest run of 1:       13           0.50       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_64K_32Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4835        1 - eps1       Fail
+ Poker             18927.10          eps         Fail
+
+ 0 Runs, length 1:      582                      Fail
+ 0 Runs, length 2:      142                      Fail
+ 0 Runs, length 3:       65                      Fail
+ 0 Runs, length 4:      568                      Fail
+ 0 Runs, length 5:      589                      Fail
+ 0 Runs, length 6+:    1115                      Fail
+
+ 1 Runs, length 1:     1905                      Fail
+ 1 Runs, length 2:      710                      Fail
+ 1 Runs, length 3:      274                      Fail
+ 1 Runs, length 4:      172                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       28         3.7e-5       Fail
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_128K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7400        1 - eps1       Fail
+ Poker              3692.70          eps         Fail
+
+ 0 Runs, length 1:     1240                      Fail
+ 0 Runs, length 2:     1178                      Pass
+ 0 Runs, length 3:      741                      Fail
+ 0 Runs, length 4:      449                      Fail
+ 0 Runs, length 5:      296                      Fail
+ 0 Runs, length 6+:     468                      Fail
+
+ 1 Runs, length 1:     2517                      Pass
+ 1 Runs, length 2:     1078                      Fail
+ 1 Runs, length 3:      507                      Fail
+ 1 Runs, length 4:      176                      Fail
+ 1 Runs, length 5:       62                      Fail
+ 1 Runs, length 6+:      32                      Fail
+
+ Longest run of 0:       19           0.02       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_64K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4876        1 - eps1       Fail
+ Poker             18587.51          eps         Fail
+
+ 0 Runs, length 1:      630                      Fail
+ 0 Runs, length 2:      151                      Fail
+ 0 Runs, length 3:       67                      Fail
+ 0 Runs, length 4:      614                      Fail
+ 0 Runs, length 5:      562                      Fail
+ 0 Runs, length 6+:    1115                      Fail
+
+ 1 Runs, length 1:     1938                      Fail
+ 1 Runs, length 2:      793                      Fail
+ 1 Runs, length 3:      280                      Fail
+ 1 Runs, length 4:      128                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       23         1.2e-3       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_40K_1024Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit              10047           0.26       Pass
+ Poker                 9.48           0.85       Pass
+
+ 0 Runs, length 1:     2527                      Pass
+ 0 Runs, length 2:     1343                      Pass
+ 0 Runs, length 3:      615                      Pass
+ 0 Runs, length 4:      278                      Pass
+ 0 Runs, length 5:      150                      Pass
+ 0 Runs, length 6+:     141                      Pass
+
+ 1 Runs, length 1:     2531                      Pass
+ 1 Runs, length 2:     1289                      Pass
+ 1 Runs, length 3:      617                      Pass
+ 1 Runs, length 4:      298                      Pass
+ 1 Runs, length 5:      167                      Pass
+ 1 Runs, length 6+:     152                      Pass
+
+ Longest run of 0:       14           0.46       Pass
+ Longest run of 1:       15           0.26       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_128K_2048Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               9885           0.95       Pass
+ Poker                17.13           0.31       Pass
+
+ 0 Runs, length 1:     2444                      Pass
+ 0 Runs, length 2:     1220                      Pass
+ 0 Runs, length 3:      626                      Pass
+ 0 Runs, length 4:      336                      Pass
+ 0 Runs, length 5:      140                      Pass
+ 0 Runs, length 6+:     186                      Pass
+
+ 1 Runs, length 1:     2477                      Pass
+ 1 Runs, length 2:     1244                      Pass
+ 1 Runs, length 3:      611                      Pass
+ 1 Runs, length 4:      296                      Pass
+ 1 Runs, length 5:      173                      Pass
+ 1 Runs, length 6+:     150                      Pass
+
+ Longest run of 0:       13           0.50       Pass
+ Longest run of 1:       13           0.50       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_64K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7526        1 - eps1       Fail
+ Poker              3725.64          eps         Fail
+
+ 0 Runs, length 1:     1262                      Fail
+ 0 Runs, length 2:     1068                      Fail
+ 0 Runs, length 3:      813                      Fail
+ 0 Runs, length 4:      517                      Fail
+ 0 Runs, length 5:      293                      Fail
+ 0 Runs, length 6+:     420                      Fail
+
+ 1 Runs, length 1:     2471                      Pass
+ 1 Runs, length 2:     1109                      Fail
+ 1 Runs, length 3:      486                      Fail
+ 1 Runs, length 4:      192                      Fail
+ 1 Runs, length 5:       79                      Fail
+ 1 Runs, length 6+:      36                      Fail
+
+ Longest run of 0:       18           0.04       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_128K_64Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4896        1 - eps1       Fail
+ Poker             18633.68          eps         Fail
+
+ 0 Runs, length 1:      632                      Fail
+ 0 Runs, length 2:      140                      Fail
+ 0 Runs, length 3:       59                      Fail
+ 0 Runs, length 4:      648                      Fail
+ 0 Runs, length 5:      536                      Fail
+ 0 Runs, length 6+:    1112                      Fail
+
+ 1 Runs, length 1:     1950                      Fail
+ 1 Runs, length 2:      729                      Fail
+ 1 Runs, length 3:      301                      Fail
+ 1 Runs, length 4:      146                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       24         6.0e-4       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_64K_64Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4762        1 - eps1       Fail
+ Poker             19108.08          eps         Fail
+
+ 0 Runs, length 1:      614                      Fail
+ 0 Runs, length 2:      145                      Fail
+ 0 Runs, length 3:       61                      Fail
+ 0 Runs, length 4:      588                      Fail
+ 0 Runs, length 5:      581                      Fail
+ 0 Runs, length 6+:    1096                      Fail
+
+ 1 Runs, length 1:     1944                      Fail
+ 1 Runs, length 2:      723                      Fail
+ 1 Runs, length 3:      300                      Fail
+ 1 Runs, length 4:      118                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       23         1.2e-3       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_40K_32Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4831        1 - eps1       Fail
+ Poker             18668.09          eps         Fail
+
+ 0 Runs, length 1:      599                      Fail
+ 0 Runs, length 2:      159                      Fail
+ 0 Runs, length 3:       74                      Fail
+ 0 Runs, length 4:      596                      Fail
+ 0 Runs, length 5:      554                      Fail
+ 0 Runs, length 6+:    1129                      Fail
+
+ 1 Runs, length 1:     1947                      Fail
+ 1 Runs, length 2:      742                      Fail
+ 1 Runs, length 3:      288                      Fail
+ 1 Runs, length 4:      134                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       24         6.0e-4       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_40K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit              10023           0.38       Pass
+ Poker                16.16           0.37       Pass
+
+ 0 Runs, length 1:     2548                      Pass
+ 0 Runs, length 2:     1187                      Pass
+ 0 Runs, length 3:      611                      Pass
+ 0 Runs, length 4:      296                      Pass
+ 0 Runs, length 5:      153                      Pass
+ 0 Runs, length 6+:     173                      Pass
+
+ 1 Runs, length 1:     2446                      Pass
+ 1 Runs, length 2:     1261                      Pass
+ 1 Runs, length 3:      637                      Pass
+ 1 Runs, length 4:      303                      Pass
+ 1 Runs, length 5:      160                      Pass
+ 1 Runs, length 6+:     162                      Pass
+
+ Longest run of 0:       13           0.50       Pass
+ Longest run of 1:       11           0.91       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_40K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4849        1 - eps1       Fail
+ Poker             18709.78          eps         Fail
+
+ 0 Runs, length 1:      619                      Fail
+ 0 Runs, length 2:      142                      Fail
+ 0 Runs, length 3:       83                      Fail
+ 0 Runs, length 4:      609                      Fail
+ 0 Runs, length 5:      534                      Fail
+ 0 Runs, length 6+:    1125                      Fail
+
+ 1 Runs, length 1:     1950                      Fail
+ 1 Runs, length 2:      733                      Fail
+ 1 Runs, length 3:      283                      Fail
+ 1 Runs, length 4:      146                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       25         3.0e-4       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_128K_256Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7410        1 - eps1       Fail
+ Poker              3811.07          eps         Fail
+
+ 0 Runs, length 1:     1239                      Fail
+ 0 Runs, length 2:     1089                      Fail
+ 0 Runs, length 3:      783                      Fail
+ 0 Runs, length 4:      473                      Fail
+ 0 Runs, length 5:      296                      Fail
+ 0 Runs, length 6+:     464                      Fail
+
+ 1 Runs, length 1:     2466                      Pass
+ 1 Runs, length 2:     1124                      Pass
+ 1 Runs, length 3:      456                      Fail
+ 1 Runs, length 4:      192                      Fail
+ 1 Runs, length 5:       71                      Fail
+ 1 Runs, length 6+:      34                      Fail
+
+ Longest run of 0:       19           0.02       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_64K_1024Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit              10104           0.07       Pass
+ Poker                18.57           0.23       Pass
+
+ 0 Runs, length 1:     2514                      Pass
+ 0 Runs, length 2:     1242                      Pass
+ 0 Runs, length 3:      622                      Pass
+ 0 Runs, length 4:      306                      Pass
+ 0 Runs, length 5:      152                      Pass
+ 0 Runs, length 6+:     149                      Pass
+
+ 1 Runs, length 1:     2487                      Pass
+ 1 Runs, length 2:     1215                      Pass
+ 1 Runs, length 3:      626                      Pass
+ 1 Runs, length 4:      324                      Pass
+ 1 Runs, length 5:      164                      Pass
+ 1 Runs, length 6+:     169                      Pass
+
+ Longest run of 0:       14           0.46       Pass
+ Longest run of 1:       14           0.46       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_128K_1024Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               9909           0.90       Pass
+ Poker                15.82           0.39       Pass
+
+ 0 Runs, length 1:     2477                      Pass
+ 0 Runs, length 2:     1286                      Pass
+ 0 Runs, length 3:      620                      Pass
+ 0 Runs, length 4:      307                      Pass
+ 0 Runs, length 5:      149                      Pass
+ 0 Runs, length 6+:     171                      Pass
+
+ 1 Runs, length 1:     2483                      Pass
+ 1 Runs, length 2:     1299                      Pass
+ 1 Runs, length 3:      640                      Pass
+ 1 Runs, length 4:      302                      Pass
+ 1 Runs, length 5:      139                      Pass
+ 1 Runs, length 6+:     146                      Pass
+
+ Longest run of 0:       14           0.46       Pass
+ Longest run of 1:       13           0.50       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_40K_64Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4870        1 - eps1       Fail
+ Poker             18777.66          eps         Fail
+
+ 0 Runs, length 1:      593                      Fail
+ 0 Runs, length 2:      163                      Fail
+ 0 Runs, length 3:       80                      Fail
+ 0 Runs, length 4:      600                      Fail
+ 0 Runs, length 5:      539                      Fail
+ 0 Runs, length 6+:    1127                      Fail
+
+ 1 Runs, length 1:     1902                      Fail
+ 1 Runs, length 2:      772                      Fail
+ 1 Runs, length 3:      288                      Fail
+ 1 Runs, length 4:      140                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       29         1.9e-5       Fail
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_40K_2048Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               9906           0.91       Pass
+ Poker                10.23           0.81       Pass
+
+ 0 Runs, length 1:     2488                      Pass
+ 0 Runs, length 2:     1264                      Pass
+ 0 Runs, length 3:      623                      Pass
+ 0 Runs, length 4:      294                      Pass
+ 0 Runs, length 5:      162                      Pass
+ 0 Runs, length 6+:     173                      Pass
+
+ 1 Runs, length 1:     2541                      Pass
+ 1 Runs, length 2:     1263                      Pass
+ 1 Runs, length 3:      605                      Pass
+ 1 Runs, length 4:      284                      Pass
+ 1 Runs, length 5:      141                      Pass
+ 1 Runs, length 6+:     171                      Pass
+
+ Longest run of 0:       18           0.04       Pass
+ Longest run of 1:       12           0.70       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_40K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7426        1 - eps1       Fail
+ Poker              3793.13          eps         Fail
+
+ 0 Runs, length 1:     1242                      Fail
+ 0 Runs, length 2:     1127                      Pass
+ 0 Runs, length 3:      796                      Fail
+ 0 Runs, length 4:      487                      Fail
+ 0 Runs, length 5:      283                      Fail
+ 0 Runs, length 6+:     452                      Fail
+
+ 1 Runs, length 1:     2532                      Pass
+ 1 Runs, length 2:     1111                      Fail
+ 1 Runs, length 3:      439                      Fail
+ 1 Runs, length 4:      201                      Fail
+ 1 Runs, length 5:       69                      Fail
+ 1 Runs, length 6+:      34                      Fail
+
+ Longest run of 0:       19           0.02       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_64K_256Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7476        1 - eps1       Fail
+ Poker              3704.20          eps         Fail
+
+ 0 Runs, length 1:     1231                      Fail
+ 0 Runs, length 2:     1082                      Fail
+ 0 Runs, length 3:      768                      Fail
+ 0 Runs, length 4:      476                      Fail
+ 0 Runs, length 5:      300                      Fail
+ 0 Runs, length 6+:     462                      Fail
+
+ 1 Runs, length 1:     2452                      Pass
+ 1 Runs, length 2:     1071                      Fail
+ 1 Runs, length 3:      469                      Fail
+ 1 Runs, length 4:      201                      Fail
+ 1 Runs, length 5:       85                      Fail
+ 1 Runs, length 6+:      41                      Fail
+
+ Longest run of 0:       17           0.07       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_128K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit              10089           0.11       Pass
+ Poker                12.55           0.64       Pass
+
+ 0 Runs, length 1:     2472                      Pass
+ 0 Runs, length 2:     1258                      Pass
+ 0 Runs, length 3:      620                      Pass
+ 0 Runs, length 4:      317                      Pass
+ 0 Runs, length 5:      147                      Pass
+ 0 Runs, length 6+:     150                      Pass
+
+ 1 Runs, length 1:     2424                      Pass
+ 1 Runs, length 2:     1258                      Pass
+ 1 Runs, length 3:      623                      Pass
+ 1 Runs, length 4:      330                      Pass
+ 1 Runs, length 5:      176                      Pass
+ 1 Runs, length 6+:     153                      Pass
+
+ Longest run of 0:       13           0.50       Pass
+ Longest run of 1:       14           0.46       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_40K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7453        1 - eps1       Fail
+ Poker              3743.19          eps         Fail
+
+ 0 Runs, length 1:     1272                      Fail
+ 0 Runs, length 2:     1106                      Fail
+ 0 Runs, length 3:      732                      Fail
+ 0 Runs, length 4:      505                      Fail
+ 0 Runs, length 5:      286                      Fail
+ 0 Runs, length 6+:     464                      Fail
+
+ 1 Runs, length 1:     2513                      Pass
+ 1 Runs, length 2:     1086                      Fail
+ 1 Runs, length 3:      454                      Fail
+ 1 Runs, length 4:      186                      Fail
+ 1 Runs, length 5:       94                      Fail
+ 1 Runs, length 6+:      32                      Fail
+
+ Longest run of 0:       15           0.26       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_128K_128Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4851        1 - eps1       Fail
+ Poker             19051.86          eps         Fail
+
+ 0 Runs, length 1:      575                      Fail
+ 0 Runs, length 2:      144                      Fail
+ 0 Runs, length 3:       64                      Fail
+ 0 Runs, length 4:      588                      Fail
+ 0 Runs, length 5:      557                      Fail
+ 0 Runs, length 6+:    1120                      Fail
+
+ 1 Runs, length 1:     1852                      Fail
+ 1 Runs, length 2:      736                      Fail
+ 1 Runs, length 3:      312                      Fail
+ 1 Runs, length 4:      147                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       24         6.0e-4       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_256N_256T_64K_2048Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               9788           0.9986       Pass
+ Poker                26.55           0.03       Pass
+
+ 0 Runs, length 1:     2375                      Pass
+ 0 Runs, length 2:     1215                      Pass
+ 0 Runs, length 3:      627                      Pass
+ 0 Runs, length 4:      335                      Pass
+ 0 Runs, length 5:      175                      Pass
+ 0 Runs, length 6+:     177                      Pass
+
+ 1 Runs, length 1:     2433                      Pass
+ 1 Runs, length 2:     1248                      Pass
+ 1 Runs, length 3:      614                      Pass
+ 1 Runs, length 4:      320                      Pass
+ 1 Runs, length 5:      147                      Pass
+ 1 Runs, length 6+:     143                      Pass
+
+ Longest run of 0:       18           0.04       Pass
+ Longest run of 1:       15           0.26       Pass
+ ----------------------------------------------------------
+ All values are within the required intervals of FIPS-140-2
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_128K_512Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7419        1 - eps1       Fail
+ Poker              3694.27          eps         Fail
+
+ 0 Runs, length 1:     1223                      Fail
+ 0 Runs, length 2:     1056                      Fail
+ 0 Runs, length 3:      769                      Fail
+ 0 Runs, length 4:      479                      Fail
+ 0 Runs, length 5:      316                      Fail
+ 0 Runs, length 6+:     468                      Fail
+
+ 1 Runs, length 1:     2468                      Pass
+ 1 Runs, length 2:     1059                      Fail
+ 1 Runs, length 3:      475                      Fail
+ 1 Runs, length 4:      185                      Fail
+ 1 Runs, length 5:       76                      Fail
+ 1 Runs, length 6+:      48                      Fail
+
+ Longest run of 0:       17           0.07       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_64N_64T_40K_256Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               7286        1 - eps1       Fail
+ Poker              3751.48          eps         Fail
+
+ 0 Runs, length 1:     1245                      Fail
+ 0 Runs, length 2:     1050                      Fail
+ 0 Runs, length 3:      747                      Fail
+ 0 Runs, length 4:      464                      Fail
+ 0 Runs, length 5:      319                      Fail
+ 0 Runs, length 6+:     497                      Fail
+
+ 1 Runs, length 1:     2505                      Pass
+ 1 Runs, length 2:     1083                      Fail
+ 1 Runs, length 3:      464                      Fail
+ 1 Runs, length 4:      165                      Fail
+ 1 Runs, length 5:       67                      Fail
+ 1 Runs, length 6+:      38                      Fail
+
+ Longest run of 0:       17           0.07       Pass
+ Longest run of 1:        6        1 - eps1       Pass
+
+
+
+
+============== Summary results of FIPS-140-2 ==============
+
+ File:             RC4_NN_drop_16N_16T_128K_32Bdrop.bin
+ Number of bits:   20000
+
+       Test          s-value        p-value    FIPS Decision
+ --------------------------------------------------------
+ Monobit               4931        1 - eps1       Fail
+ Poker             18550.97          eps         Fail
+
+ 0 Runs, length 1:      627                      Fail
+ 0 Runs, length 2:      133                      Fail
+ 0 Runs, length 3:       61                      Fail
+ 0 Runs, length 4:      620                      Fail
+ 0 Runs, length 5:      562                      Fail
+ 0 Runs, length 6+:    1117                      Fail
+
+ 1 Runs, length 1:     1908                      Fail
+ 1 Runs, length 2:      772                      Fail
+ 1 Runs, length 3:      281                      Fail
+ 1 Runs, length 4:      159                      Fail
+ 1 Runs, length 5:        0                      Fail
+ 1 Runs, length 6+:       0                      Fail
+
+ Longest run of 0:       23         1.2e-3       Pass
+ Longest run of 1:        4        1 - eps1       Pass
+
+
+

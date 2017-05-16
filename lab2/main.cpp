@@ -12,7 +12,7 @@ void RC4_NN(){
 
   for(uint i = 0; i < 3 ; ++i){
     for(uint j = 0; j < 3; ++j){
-      RC4* tests = new RC4(N[i], keyLen[j], N[i], 100000000, 0);//(N,keyLen,T,outSize,dropByte)
+      RC4* tests = new RC4(N[i], keyLen[j], N[i], 2500, 0);//(N,keyLen,T,outSize,dropByte)
 
       tests -> genRandom();
       tests -> saveNumbers((filePath+std::to_string(N[i])+"N_"+std::to_string(N[i])+"T_"+std::to_string(keyLen[j])+"K"));
@@ -31,7 +31,7 @@ void RC4_NN_drop(){
   for(uint i = 0; i < 3 ; ++i){
     for(uint j = 0; j < 3; ++j){
       for(uint k = 0; k < 3; ++k){
-        RC4* tests = new RC4(N[i], keyLen[j], N[i], 100000000, K[k]*N[i]);//(N,keyLen,T,outSize,dropByte)
+        RC4* tests = new RC4(N[i], keyLen[j], N[i], 2500, K[k]*N[i]);//(N,keyLen,T,outSize,dropByte)
 
         tests -> genRandom();
         tests -> saveNumbers((filePath+std::to_string(N[i])+"N_"+std::to_string(N[i])+
@@ -52,7 +52,7 @@ void RC4_NkN(){
   for(uint i = 0; i < 3 ; ++i){
     for(uint j = 0; j < 3; ++j){
       for(uint k = 0; k < 3; ++k){
-        RC4* tests = new RC4(N[i], keyLen[j], K[k]*N[i], 100000000, 0);//(N,keyLen,T,outSize,dropByte)
+        RC4* tests = new RC4(N[i], keyLen[j], K[k]*N[i], 2500, 0);//(N,keyLen,T,outSize,dropByte)
 
         tests -> genRandom();
         tests -> saveNumbers((filePath+std::to_string(N[i])+"N_"+std::to_string(K[k]*N[i])+

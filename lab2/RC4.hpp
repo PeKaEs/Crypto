@@ -14,28 +14,31 @@ class RC4{
 
   unsigned char *internalState;
   unsigned char *key;
+  unsigned char *outputStream;
 
   unsigned char randomValue;
 
-  unsigned int stateSize;
-  unsigned int keySize;
-  unsigned int T;
-  unsigned int iterationOfAlg;
+  uint stateSize;
+  uint keySize;
+  uint outputStreamSize;
+  uint T;
+  uint iterationOfAlg;
+  uint dropKNbyte;
 
   bool keySet;
 
   void ksaAlg();
-  void prgaAlg(unsigned int generatingOut);
+  void prgaAlg();
   void generateKey();
   unsigned char getTrueRandom();
 
 public:
-  RC4(unsigned int stateByteSize, unsigned int keyByteSize, unsigned int t);
+  RC4(uint stateByteSize, uint keyByteSize, uint t, uint outputSize, uint drop);
   virtual ~RC4();
-  void setKey(unsigned char newKey[], unsigned int size);
-  unsigned char getRandom(unsigned int iterationsOfPRNG);
+  void setKey(unsigned char newKey[], uint size);
+  void genRandom();
   unsigned char* getKey();
-  //void saveNumbers(string filePath);
+  void saveNumbers(std::string filePath);
   void info();
 
 };

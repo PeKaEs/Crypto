@@ -5,10 +5,14 @@
 
 
 int main(){
-  RC4* tests = new RC4(5,5,5);
+  RC4* tests = new RC4(256,16,256);
 
-  tests -> setKey((unsigned char*)"elooo",sizeof("elooo"));
-  tests -> info();
+  //tests -> setKey((unsigned char*)"elooo",sizeof("elooo"));
+
+  for( int i=0;i<1000;i++){
+    printf("%d\n",tests -> getRandom(1));
+  }
+  //tests -> info();
   delete tests;
   return 0;
 }

@@ -9,19 +9,19 @@
 using namespace std;
 
 void showUsage(char *entry){
-cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eo, ch}" << endl;
+cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eo, ch}" << endl;
 }
 
-bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifier,string filePath){
-  if (encMode == "" || keystorePath == "" || keyIdentifier == "" || filePath == "")
+bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifier,string filePath, string keyStorePass){
+  if (encMode == "" || keystorePath == "" || keyIdentifier == "" || filePath == "" || keyStorePass == "")
     return false;
   return true;
 }
 
 int main(int argc, char *argv[])
 {
-    string encMode,keystorePath,keyIdentifier,specMode,filePath;
-    encMode=keystorePath=keyIdentifier=specMode=filePath="";
+    string encMode, keystorePath, keyIdentifier, specMode, filePath, keyStorePass;
+    encMode= keystorePath= keyIdentifier= specMode= filePath= keyStorePass="";
 
     FileEnc encEngine;
 
@@ -51,12 +51,17 @@ int main(int argc, char *argv[])
             filePath = argv[i + 1];
             i++;
           }
+        } else if (string("-p") == argv[i]) {
+          if (i < argc - 1) {
+            keyStorePass = argv[i + 1];
+            i++;
+          }
         } else {
             showUsage(argv[0]);
             return 0;
         }
     }
-    if (!areEveryArgsSpecified(encMode,keystorePath,keyIdentifier,filePath)) {
+    if (!areEveryArgsSpecified(encMode, keystorePath, keyIdentifier, filePath, keyStorePass)) {
         showUsage(argv[0]);
         return 0;
     }
@@ -66,6 +71,7 @@ int main(int argc, char *argv[])
     encEngine.set_keyIdentifier(keyIdentifier);
     encEngine.set_specMode(specMode);
     encEngine.set_filePath(filePath);
+    encEngine.set_keyStorePassword(keyStorePass);
 
     encEngine.debugInfo();
 

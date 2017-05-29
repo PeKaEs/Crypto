@@ -26,6 +26,10 @@ void FileEnc::set_filePath(string file){
   filePath = file;
 }
 
+void FileEnc::set_keyStorePassword(string pass){
+  keyStorePass = pass;
+}
+
 void FileEnc::debugInfo(){
   printf(" filePath: %s\n encMode: %s\n keystorePath: %s\n keyIdentifier: %s\n specMode: %s\n",filePath.c_str(),encMode.c_str(),
   keystorePath.c_str(),keyIdentifier.c_str(),specMode.c_str() );
@@ -36,7 +40,7 @@ void FileEnc::run(){
     menageIvs();
     setBuffs();
     set_encryption_key();
-
+    return;
     encryptFile();
 
     deleteBuffs();
@@ -69,7 +73,7 @@ long FileEnc::get_file_length( FILE *file ) {
 
     if ( fseek( file, 0, SEEK_END )
         || ( length = ftell( file ) ) == -1 ) {
-        perror( "Finding file length" ); 
+        perror( "Finding file length" );
     }
 
     fsetpos( file, &position );
@@ -80,6 +84,18 @@ long FileEnc::get_file_length( FILE *file ) {
 
   void FileEnc::set_encryption_key(){
 
+    keyStore.UnlockComponent("30 dniowy trial o.O");
+    bool success = keyStore.LoadFile(keyStorePass.c_str(),keystorePath.c_str());
+    if (success != true)
+      {fputs (keyStore.lastErrorText(),stderr); exit (2);}
+
+    int numSecretKeys = keyStore.get_NumSecretKeys();
+    for (int i = 0 ; i< numSecretKeys ; ++i){
+      if(keyStore.getSecretKeyAlias(i) == keyIdentifier){
+         std::cout << "Key Bytes (hex): " << keyStore.getSecretKey(keyStorePass.c_str(),i,"hex") << "\r\n";
+      }
+    }
+    /*
     int iKeyIdentifier = atoi( keyIdentifier.c_str() );
     long keystoreFileSize;
     size_t result;
@@ -101,6 +117,7 @@ long FileEnc::get_file_length( FILE *file ) {
     AES_set_encrypt_key(ckey, 128, &encKey);
 
     fclose(pKeystoreFile);
+    */
   }
 
 void FileEnc::openFiles(){

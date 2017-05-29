@@ -8,6 +8,15 @@
 
 using namespace std;
 
+/*
+keytool -keystore legitKeyStore -genkey -alias client  GENERATING LEGIT KEYSTORE
+keytool -genseckey -alias first -keyalg AES -keysize 128 -storetype jceks -keystore legitKeyStore GENERATING AND ADDING KEY
+./encode -f filetoencrypt -p keystore -c legitKeyStore -k first -m ofb ENCODING FILE
+./encode -f filetoencrypt.en -p keystore -c legitKeyStore -k first -m ofb -s dec DECODING FILE
+g++ -g -Wall  main.cpp FileEnc.cpp -L/home/ghost/Pobrane/chilkat-9.5.0-x86_64-linux-gcc/lib -I/home/ghost/Pobrane/chilkat-9.5.0-x86_64-linux-gcc/include -lssl -lcrypto -lchilkat-9.5.0 -o encode COMPILING
+
+*/
+
 void showUsage(char *entry){
 cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eo, ch}" << endl;
 }

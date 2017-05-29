@@ -1,14 +1,6 @@
 #ifndef FileEnc_hpp
 #define FileEnc_hpp
 
-/*
-keytool -keystore legitKeyStore -genkey -alias client  GENERATING LEGIT KEYSTORE
-keytool -genseckey -alias first -keyalg AES -keysize 128 -storetype jceks -keystore legitKeyStore GENERATING AND ADDING KEY
-./encode -f filetoencrypt -p tracer10 -c legitKeyStore -k first -m ofb LAUNCH
-g++ -g -Wall  main.cpp FileEnc.cpp -L/home/ghost/Pobrane/chilkat-9.5.0-x86_64-linux-gcc/lib -I/home/ghost/Pobrane/chilkat-9.5.0-x86_64-linux-gcc/include -lssl -lcrypto -lchilkat-9.5.0 -o encode COMPILING
-
-*/
-
 #include <string>
 #include <stdio.h>
 #include <openssl/aes.h>
@@ -33,7 +25,7 @@ class FileEnc{
   AES_KEY encKey;
   CkJavaKeyStore keyStore;
 
-  FILE *pKeystoreFile, *pFileToEncrypt, *pEncrypted;
+  FILE *pFileToEncrypt, *pEncrypted;
 
   unsigned char *indata,*outdata;
   long indata_size, outdata_size;

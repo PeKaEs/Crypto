@@ -2,7 +2,7 @@
 
 FileEnc::FileEnc(){
   encMode = keystorePath = keyIdentifier = specMode ="";
-  pKeystoreFile = pFileToEncrypt = pEncrypted = NULL;
+  pFileToEncrypt = pEncrypted = NULL;
   aesOperation = AES_ENCRYPT;
   indata_size = outdata_size = 0;
 }
@@ -40,7 +40,6 @@ void FileEnc::run(){
     menageIvs();
     setBuffs();
     set_encryption_key();
-    return;
     encryptFile();
 
     deleteBuffs();
@@ -84,6 +83,8 @@ long FileEnc::get_file_length( FILE *file ) {
 
   void FileEnc::set_encryption_key(){
 
+    unsigned char *ckey;
+
     keyStore.UnlockComponent("30 dniowy trial o.O");
     bool success = keyStore.LoadFile(keyStorePass.c_str(),keystorePath.c_str());
     if (success != true)
@@ -92,32 +93,13 @@ long FileEnc::get_file_length( FILE *file ) {
     int numSecretKeys = keyStore.get_NumSecretKeys();
     for (int i = 0 ; i< numSecretKeys ; ++i){
       if(keyStore.getSecretKeyAlias(i) == keyIdentifier){
-         std::cout << "Key Bytes (hex): " << keyStore.getSecretKey(keyStorePass.c_str(),i,"hex") << "\r\n";
+         ckey = (unsigned char *)keyStore.getSecretKey(keyStorePass.c_str(),i,"ascii");
+         AES_set_encrypt_key(ckey, 128, &encKey);
+         return;
       }
     }
-    /*
-    int iKeyIdentifier = atoi( keyIdentifier.c_str() );
-    long keystoreFileSize;
-    size_t result;
-    unsigned char ckey[16];
-
-    pKeystoreFile = fopen ( keystorePath.c_str() , "rb" );
-        if (pKeystoreFile == NULL) {fputs ("Keystore fault, check path\n",stderr); exit (2);}
-
-    fseek (pKeystoreFile , 0 , SEEK_END);
-    keystoreFileSize = ftell (pKeystoreFile);
-    rewind (pKeystoreFile);
-
-    if(iKeyIdentifier < 1 || iKeyIdentifier*AES_BLOCK_SIZE > keystoreFileSize - 1 ){fputs ("keyIdentifier is broken\n",stderr); exit (3);}
-
-    fseek(pKeystoreFile, iKeyIdentifier*AES_BLOCK_SIZE, 0);
-    result = fread (ckey, 1, iKeyIdentifier*AES_BLOCK_SIZE, pKeystoreFile);
-      if (result != iKeyIdentifier*AES_BLOCK_SIZE) {fputs ("Reading key store error",stderr); exit (4);}
-
-    AES_set_encrypt_key(ckey, 128, &encKey);
-
-    fclose(pKeystoreFile);
-    */
+    fputs ("There is no key with that indentifier\n",stderr);
+    exit (2);
   }
 
 void FileEnc::openFiles(){
@@ -148,7 +130,7 @@ void FileEnc::menageIvs(){
 
 void FileEnc::reset(){
   encMode = keystorePath = keyIdentifier = specMode ="";
-  pKeystoreFile = pFileToEncrypt = pEncrypted = NULL;
+  pFileToEncrypt = pEncrypted = NULL;
   aesOperation = AES_ENCRYPT;
   indata_size = outdata_size = 0;
 }

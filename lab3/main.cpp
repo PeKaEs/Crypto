@@ -18,7 +18,7 @@ g++ -g -Wall  main.cpp FileEnc.cpp -L/home/ghost/Pobrane/chilkat-9.5.0-x86_64-li
 */
 
 void showUsage(char *entry){
-cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eo, ch}" << endl;
+cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eOr, ch, eOrIV}" << endl;
 }
 
 bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifier,string filePath, string keyStorePass){

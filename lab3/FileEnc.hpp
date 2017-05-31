@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <CkJavaKeyStore.h>
+#include <stdlib.h>
 #include <iostream>
 
 using namespace std;
@@ -21,11 +22,12 @@ class FileEnc{
   string filePath;
   string keyStorePass;
   int aesOperation;
+  unsigned int numberOfMessesages;
 
   AES_KEY encKey;
   CkJavaKeyStore keyStore;
 
-  FILE *pFileToEncrypt, *pEncrypted;
+  FILE *pFileToEncrypt, *pEncrypted, *pMessesageList;
 
   unsigned char *indata,*outdata;
   long indata_size, outdata_size;
@@ -41,6 +43,12 @@ class FileEnc{
   void menageIvs();
   void setBuffs();
   void deleteBuffs();
+
+  void normalRun();
+  void eOracleRun();
+  void challengeRun();
+
+  bool getNextMesessageFile();
 
 
 public:

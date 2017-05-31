@@ -2,9 +2,10 @@
 
 FileEnc::FileEnc(){
   encMode = keystorePath = keyIdentifier = specMode ="";
-  pFileToEncrypt = pEncrypted = NULL;
+  pFileToEncrypt = pEncrypted = pMessesageList = NULL;
   aesOperation = AES_ENCRYPT;
   indata_size = outdata_size = 0;
+  numberOfMessesages = 0;
 }
 
 void FileEnc::set_encMode(string enc){
@@ -36,15 +37,76 @@ void FileEnc::debugInfo(){
 }
 
 void FileEnc::run(){
-    openFiles();
-    menageIvs();
-    setBuffs();
-    set_encryption_key();
-    encryptFile();
+  if(specMode != "eOr" or specMode != "ch" or specMode != "eOrIV"){
+      normalRun();
+      return;
+    }
+  else{
+      if(specMode == "eOr" or specMode == "eOr"){
+        eOracleRun();
+      }else{
+        challengeRun();
+      }
+    }
+  }
 
-    deleteBuffs();
-    closeFiles();
-    reset();
+
+void FileEnc::normalRun(){
+  openFiles();
+  menageIvs();
+  setBuffs();
+  set_encryption_key();
+  encryptFile();
+
+  deleteBuffs();
+  closeFiles();
+  reset();
+}
+
+void FileEnc::eOracleRun(){
+  pMessesageList = fopen(filePath.c_str(), "r");
+    if(pMessesageList == NULL){fputs ("Cannot open Messesage list file\n",stderr); exit (303);}
+
+  while(getNextMesessageFile()){
+    normalRun();
+  }
+
+  fclose(pMessesageList);
+  pMessesageList = NULL;
+}
+void FileEnc::challengeRun(){
+  pMessesageList = fopen(filePath.c_str(), "r");
+    if(pMessesageList == NULL){fputs ("Cannot open Messesage list file\n",stderr); exit (303);}
+
+  getTrueRandom();
+  char randomBit = ivec[0] & 0x01;
+
+  for(char i = 0x00 ; i <= randomBit ; ++i){
+    if (!getNextMesessageFile()){fputs ("Not enough messesages\n",stderr); exit (101);}
+  }
+
+   fclose(pMessesageList);
+   pMessesageList = NULL;
+   normalRun();
+
+}
+
+bool FileEnc::getNextMesessageFile(){
+  char * line = NULL;
+  size_t len = 0;
+  ssize_t read;
+
+  if (pMessesageList){
+    while ((read = getline(&line, &len, pMessesageList)) != -1);
+
+    if (line){
+      free(line);
+      filePath = string(line);
+      return true;
+    }
+    return false;
+
+  }else{fputs ("Cannot read from Messesage list file\n",stderr); exit (202);}
 }
 
 void FileEnc::getTrueRandom(){
@@ -103,7 +165,15 @@ long FileEnc::get_file_length( FILE *file ) {
   }
 
 void FileEnc::openFiles(){
-  pEncrypted = fopen((filePath+".en").c_str(), "ab");
+
+  string encryptedFilePath;
+
+  if(specMode == "ch")
+    encryptedFilePath = "encryptedChallenge";
+  else
+    encryptedFilePath = filePath;
+
+  pEncrypted = fopen((encryptedFilePath+".en").c_str(), "ab");
       if (pEncrypted == NULL) {fputs ("Encrypted file fault, check path\n",stderr); exit (1);}
 
   pFileToEncrypt = fopen ( filePath.c_str() , "rb" );
@@ -119,7 +189,7 @@ void FileEnc::menageIvs(){
     printf("Dec %s\n",ivec );
     indata_size = outdata_size = get_file_length( pFileToEncrypt );
 
-  } else if (aesOperation == AES_ENCRYPT){
+  } else if (aesOperation == AES_ENCRYPT ){
     getTrueRandom();
     bytes_written = fwrite(ivec, 1, sizeof(ivec), pEncrypted);
     if( bytes_written < 16 ) {fputs ("Cannot store IV in file\n",stderr); exit (7);}
@@ -153,7 +223,9 @@ void FileEnc::closeFiles(){
     fclose(pFileToEncrypt);
     fclose(pEncrypted);
   }else{
-    fputs ("Cannot close files NULL pointer exception\n",stderr); exit (9);
+    if(pFileToEncrypt){fclose(pFileToEncrypt);}
+    if(pEncrypted){fclose(pEncrypted);}
+    fputs ("Cannot close at least one file NULL pointer exception\n",stderr); exit (9);
   }
 }
 

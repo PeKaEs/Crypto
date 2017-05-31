@@ -37,12 +37,12 @@ void FileEnc::debugInfo(){
 }
 
 void FileEnc::run(){
-  if(specMode != "eOr" or specMode != "ch" or specMode != "eOrIV"){
+  if(specMode != "eOr" and specMode != "ch" and specMode != "eOrIV"){
       normalRun();
       return;
     }
   else{
-      if(specMode == "eOr" or specMode == "eOr"){
+      if(specMode == "eOr" or specMode == "eOrIV"){
         eOracleRun();
       }else{
         challengeRun();
@@ -74,12 +74,14 @@ void FileEnc::eOracleRun(){
   fclose(pMessesageList);
   pMessesageList = NULL;
 }
+
 void FileEnc::challengeRun(){
   pMessesageList = fopen(filePath.c_str(), "r");
     if(pMessesageList == NULL){fputs ("Cannot open Messesage list file\n",stderr); exit (303);}
 
   getTrueRandom();
   char randomBit = ivec[0] & 0x01;
+  randomBit = 1;
 
   for(char i = 0x00 ; i <= randomBit ; ++i){
     if (!getNextMesessageFile()){fputs ("Not enough messesages\n",stderr); exit (101);}
@@ -94,14 +96,13 @@ void FileEnc::challengeRun(){
 bool FileEnc::getNextMesessageFile(){
   char * line = NULL;
   size_t len = 0;
-  ssize_t read;
 
   if (pMessesageList){
-    while ((read = getline(&line, &len, pMessesageList)) != -1);
+    getline(&line, &len, pMessesageList);
 
     if (line){
-      free(line);
       filePath = string(line);
+      free(line);
       return true;
     }
     return false;
@@ -172,6 +173,8 @@ void FileEnc::openFiles(){
     encryptedFilePath = "encryptedChallenge";
   else
     encryptedFilePath = filePath;
+
+  cout<<"File Path :"<<filePath<<" encryptedFilePath :"<<encryptedFilePath<<endl;
 
   pEncrypted = fopen((encryptedFilePath+".en").c_str(), "ab");
       if (pEncrypted == NULL) {fputs ("Encrypted file fault, check path\n",stderr); exit (1);}

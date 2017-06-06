@@ -18,7 +18,7 @@ g++ -g -Wall  main.cpp FileEnc.cpp -L/home/ghost/Pobrane/chilkat-9.5.0-x86_64-li
 */
 
 void showUsage(char *entry){
-cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eOr, ch, eOrIV}" << endl;
+cout << "Usage: " << entry << " [-m] ENC_MODE [-c] KEYSTORE_FILE_PATH [-p] KEYSTORE_PASSWORD [-k] KEY_IDENTIFIER [-f] PATH_TO_FILE [-s] special_mode (optional) {dec, eOr, ch, eOrIV} [-pIV] pre_IV " << endl;
 }
 
 bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifier,string filePath, string keyStorePass){
@@ -29,8 +29,8 @@ bool areEveryArgsSpecified(string encMode,string keystorePath,string keyIdentifi
 
 int main(int argc, char *argv[])
 {
-    string encMode, keystorePath, keyIdentifier, specMode, filePath, keyStorePass;
-    encMode= keystorePath= keyIdentifier= specMode= filePath= keyStorePass="";
+    string encMode, keystorePath, keyIdentifier, specMode, filePath, keyStorePass, preIV;
+    encMode= keystorePath= keyIdentifier= specMode= filePath= keyStorePass= preIV ="";
 
     FileEnc encEngine;
 
@@ -65,6 +65,11 @@ int main(int argc, char *argv[])
             keyStorePass = argv[i + 1];
             i++;
           }
+        }else if (string("-pIV") == argv[i]) {
+            if (i < argc - 1) {
+            preIV = argv[i+1];
+            i++;
+          }
         } else {
             showUsage(argv[0]);
             return 0;
@@ -81,6 +86,7 @@ int main(int argc, char *argv[])
     encEngine.set_specMode(specMode);
     encEngine.set_filePath(filePath);
     encEngine.set_keyStorePassword(keyStorePass);
+    encEngine.set_preIV(preIV);
 
     encEngine.debugInfo();
 

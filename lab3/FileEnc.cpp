@@ -1,11 +1,12 @@
 #include "FileEnc.hpp"
 
 FileEnc::FileEnc(){
-  encMode = keystorePath = keyIdentifier = specMode ="";
+  encMode = keystorePath = keyIdentifier = specMode = preIV ="";
   pFileToEncrypt = pEncrypted = pMessesageList = NULL;
   aesOperation = AES_ENCRYPT;
   indata_size = outdata_size = 0;
   numberOfMessesages = 0;
+  firstRun = true;
 }
 
 void FileEnc::set_encMode(string enc){
@@ -29,6 +30,10 @@ void FileEnc::set_filePath(string file){
 
 void FileEnc::set_keyStorePassword(string pass){
   keyStorePass = pass;
+}
+
+void FileEnc::set_preIV(string pre){
+  preIV = pre;
 }
 
 void FileEnc::debugInfo(){
@@ -196,10 +201,23 @@ void FileEnc::menageIvs(){
     indata_size = outdata_size = get_file_length( pFileToEncrypt );
 
   } else if (aesOperation == AES_ENCRYPT ){
-    getTrueRandom();
+    if (specMode != "eOrIV" or firstRun or preIV == ""){
+        getTrueRandom();
+        memcpy(startIvec,ivec,sizeof(ivec));
+        firstRun = false;
+      }else{
+          if(preIV != ""){
+            memcpy(ivec ,preIV.c_str(),sizeof(ivec));
+            preIV = "";
+          }else{
+            memcpy(ivec ,startIvec,sizeof(startIvec));
+          }
+          ivec[15]++;
+          memcpy(startIvec,ivec,sizeof(ivec));
+    }
     bytes_written = fwrite(ivec, 1, sizeof(ivec), pEncrypted);
     if( bytes_written < 16 ) {fputs ("Cannot store IV in file\n",stderr); exit (7);}
-    printf("Enc %s\n",ivec );
+    printf("Enc 0x%x\n",ivec[15] );
     indata_size = outdata_size = get_file_length( pFileToEncrypt );
   }
   }

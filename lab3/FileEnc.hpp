@@ -1,7 +1,7 @@
 #ifndef FileEnc_hpp
 #define FileEnc_hpp
 
-#include <string>
+#include <string.h>
 #include <stdio.h>
 #include <openssl/aes.h>
 #include <cstdlib>
@@ -21,11 +21,13 @@ class FileEnc{
   string specMode;
   string filePath;
   string keyStorePass;
+  string preIV;
   int aesOperation;
   unsigned int numberOfMessesages;
 
   AES_KEY encKey;
   CkJavaKeyStore keyStore;
+  bool firstRun;
 
   FILE *pFileToEncrypt, *pEncrypted, *pMessesageList;
 
@@ -33,6 +35,7 @@ class FileEnc{
   long indata_size, outdata_size;
 
   unsigned char ivec[16];
+  unsigned char startIvec[16];
 
   void encryptFile();
   long get_file_length( FILE *file );
@@ -59,6 +62,7 @@ public:
   void set_specMode(string spec);
   void set_filePath(string file);
   void set_keyStorePassword(string pass);
+  void set_preIV(string pre);
   void run();
   void reset();
 

@@ -48,6 +48,7 @@ void FileEnc::run(){
         challengeRun();
       }
     }
+    reset();
   }
 
 
@@ -60,7 +61,6 @@ void FileEnc::normalRun(){
 
   deleteBuffs();
   closeFiles();
-  reset();
 }
 
 void FileEnc::eOracleRun(){
@@ -81,7 +81,6 @@ void FileEnc::challengeRun(){
 
   getTrueRandom();
   char randomBit = ivec[0] & 0x01;
-  randomBit = 1;
 
   for(char i = 0x00 ; i <= randomBit ; ++i){
     if (!getNextMesessageFile()){fputs ("Not enough messesages\n",stderr); exit (101);}
@@ -96,11 +95,15 @@ void FileEnc::challengeRun(){
 bool FileEnc::getNextMesessageFile(){
   char * line = NULL;
   size_t len = 0;
+  int chars = 0;
 
   if (pMessesageList){
-    getline(&line, &len, pMessesageList);
+    chars = getline(&line, &len, pMessesageList);
 
-    if (line){
+    if (chars != -1){
+      if (line[chars - 1] == '\n'){
+          line[chars - 1] = '\0';
+        }
       filePath = string(line);
       free(line);
       return true;
@@ -145,13 +148,13 @@ long FileEnc::get_file_length( FILE *file ) {
 }
 
   void FileEnc::set_encryption_key(){
-
     unsigned char *ckey;
 
     keyStore.UnlockComponent("30 dniowy trial o.O");
     bool success = keyStore.LoadFile(keyStorePass.c_str(),keystorePath.c_str());
     if (success != true)
       {fputs (keyStore.lastErrorText(),stderr); exit (2);}
+
 
     int numSecretKeys = keyStore.get_NumSecretKeys();
     for (int i = 0 ; i< numSecretKeys ; ++i){

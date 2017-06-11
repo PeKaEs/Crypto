@@ -166,6 +166,12 @@ long FileEnc::get_file_length( FILE *file ) {
       if(keyStore.getSecretKeyAlias(i) == keyIdentifier){
          ckey = (unsigned char *)keyStore.getSecretKey(keyStorePass.c_str(),i,"ascii");
          AES_set_encrypt_key(ckey, 128, &encKey);
+
+         if(specMode == "dec" && encMode != "ofb" && encMode != "cfb")
+            AES_set_decrypt_key(ckey, 128, &encKey);
+         else
+            AES_set_encrypt_key(ckey, 128, &encKey);
+
          return;
       }
     }
@@ -201,20 +207,23 @@ void FileEnc::menageIvs(){
     indata_size = outdata_size = get_file_length( pFileToEncrypt );
 
   } else if (aesOperation == AES_ENCRYPT ){
-    if (specMode != "eOrIV" or firstRun or preIV == ""){
+  if(preIV == ""){
+    if (specMode != "eOrIV" or firstRun){
         getTrueRandom();
         memcpy(startIvec,ivec,sizeof(ivec));
         firstRun = false;
       }else{
-          if(preIV != ""){
-            memcpy(ivec ,preIV.c_str(),sizeof(ivec));
-            preIV = "";
-          }else{
-            memcpy(ivec ,startIvec,sizeof(startIvec));
-          }
+          memcpy(ivec ,startIvec,sizeof(startIvec));
           ivec[15]++;
           memcpy(startIvec,ivec,sizeof(ivec));
     }
+  }else{
+    memcpy(ivec ,preIV.c_str(),sizeof(ivec));
+    preIV = "";
+    ivec[15]++;
+    memcpy(startIvec,ivec,sizeof(ivec));
+    firstRun = false;
+  }
     bytes_written = fwrite(ivec, 1, sizeof(ivec), pEncrypted);
     if( bytes_written < 16 ) {fputs ("Cannot store IV in file\n",stderr); exit (7);}
     printf("Enc 0x%x\n",ivec[15] );
@@ -255,7 +264,7 @@ void FileEnc::closeFiles(){
 
 void FileEnc::encryptFile(){
   int num = 0;
-
+printf("Enc 0x%x\n",ivec[15] );
   if (fread(indata, 1, indata_size, pFileToEncrypt)){
 
     if (encMode == "cfb"){

@@ -40,9 +40,6 @@ MerkleCli::MerkleCli(std::string fileName){
   puzzleFile = fopen(fileName.c_str(), "rb");
       if (puzzleFile == NULL) {fputs ("Exange file fault, check path\n",stderr); exit (1);}
 
-  prepareBuffs();
-  chooseKey();
-  getChosenBuff();
 }
 
 MerkleCli::~MerkleCli(){
@@ -57,7 +54,6 @@ void MerkleCli::info(){
       std::cout<<preambleLabels[i];
       std::cout<< std::hex <<"0x"<<uPreamble[i]<<std::endl;
     }
-  std::cout<<"elo";
 }
 
 void MerkleCli::prepareBuffs(){
@@ -82,16 +78,20 @@ void MerkleCli::chooseKey(){
 }
 
 void MerkleCli::getChosenBuff(){
-
   size_t n0OfVal = 0;
-  chosenKey = 0;
-
   fseek(puzzleFile, (long)(chosenKey * bytesBuffSize), SEEK_CUR);
 
-  n0OfVal = fread(&buffer, 1, bytesBuffSize, puzzleFile);
+  n0OfVal = fread(buffer, 1, bytesBuffSize, puzzleFile);
       if (n0OfVal < bytesBuffSize){fputs ("Not enough key data to read\n",stderr); exit (2);}
 
   for(uint i = 0; i < bytesBuffSize ; ++i){
-    std::cout<<std::hex<<"0x"<<buffer[i];
+    std::cout<<std::hex<<(uint)buffer[i];
   }
+
+}
+
+void MerkleCli::run(){
+  prepareBuffs();
+  chooseKey();
+  getChosenBuff();
 }

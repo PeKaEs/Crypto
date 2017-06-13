@@ -35,6 +35,7 @@ MerkleCli();
 MerkleCli(std::string fileName);
 ~MerkleCli();
 
+void run();
 void info();
 
 };

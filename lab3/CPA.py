@@ -58,7 +58,7 @@ with open("CPAtest_choosen.txt", "wb") as f:
     f.write(choosenPlain)
     bytesCount = bytesCount + 1
 
-trig = "./encode "+ "-f CPAtest_choosen.txt "+ "-c legitKeyStore " + "-k first " + "-m cfb " + "-p keystore " + IV2
+trig = "./encode "+ "-f CPAtest_choosen.txt "+ "-c legitKeyStore " + "-k first " + "-m cbc " + "-p keystore " + IV2
 os.system(trig)
 
 with open("CPAtest_choosen.txt.en", "rb") as f:

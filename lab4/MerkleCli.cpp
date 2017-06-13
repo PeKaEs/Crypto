@@ -29,6 +29,21 @@ if(!fwrite(finalRow, 1, (4+ 4+ ( keysSize/8 )), pEnc)){
 
 */
 
+unsigned long long int uint_pow(uint base, uint exp)
+{
+    unsigned long long int result = 1;
+    while (exp)
+    {
+        if (exp & 1){
+           result *= (unsigned long long int)base;
+std::cout<<std::dec<<exp<<std::endl;
+}
+        exp /= 2;
+        base *= base;
+    }
+    return result;
+}
+
 MerkleCli::MerkleCli(){
   puzzleFile = fopen("default", "rb");
       if (puzzleFile == NULL) {fputs ("Exange file fault, check path\n",stderr); exit (1);}
@@ -84,9 +99,69 @@ void MerkleCli::getChosenBuff(){
   n0OfVal = fread(buffer, 1, bytesBuffSize, puzzleFile);
       if (n0OfVal < bytesBuffSize){fputs ("Not enough key data to read\n",stderr); exit (2);}
 
-  for(uint i = 0; i < bytesBuffSize ; ++i){
-    std::cout<<std::hex<<(uint)buffer[i];
-  }
+  //for(uint i = 0; i<bytesBuffSize ; ++i){
+    //std::cout<<std::hex<<buffer[i];
+  //}
+  //std::cout<<""<<std::endl;
+}
+
+void  MerkleCli::bruteforceKey(){
+    unsigned char endConstVal[4];
+    unsigned char ivec[16], tmpIV[16], brokenKey[16] = {0};
+    unsigned char* tempBuff = new unsigned char [bytesBuffSize-16];
+    unsigned char* encryptedPair = new unsigned char [bytesBuffSize-16];
+    bool decrypted = false;
+    AES_KEY encKey;
+    int num = 0;
+    uint perc = 0;
+    unsigned long long int sizeOfKeySpace = uint_pow(2,uPreamble[1]);
+
+    memcpy(ivec,buffer,sizeof(ivec));
+    memcpy(tmpIV ,ivec,sizeof(ivec));
+    memcpy( encryptedPair, buffer+16,bytesBuffSize-16 );
+
+    for(uint i = 0; i < 4; ++i){
+      endConstVal[i] = (uPreamble[4] >> (24-( i*8 ))) & 0xFF;
+    }
+
+    for(unsigned long long int i=0 ; i < pow(2,uPreamble[1]); ++i){
+
+      tempBuff = {0};
+
+        for( uint j = 15 ; j > 15 - (uPreamble[1]/8) ; --j ){
+          brokenKey[j] = (i >> (j * 8)) & 0xFF;
+          }
+
+
+      AES_set_encrypt_key(brokenKey, 128, &encKey);
+
+      AES_cfb128_encrypt(encryptedPair, tempBuff, bytesBuffSize-16, &encKey, tmpIV, &num, AES_DECRYPT);
+
+      for (uint j =  0; j < 4; ++j){
+        std::cout<<"kurr"<<std::endl;
+        if (tempBuff[j+(bytesBuffSize-16-4)] != endConstVal[j])
+            break;
+        if (j == 3)
+            decrypted = true;
+      }
+
+
+      memcpy(tmpIV ,ivec,sizeof(tmpIV));
+      num = 0;
+
+
+
+      if ( decrypted ){
+        for(uint j = 0; j<bytesBuffSize-16; ++j){
+          std::cout<<tempBuff[j];
+        }
+          break;
+      }
+
+    }
+
+    delete tempBuff;
+    delete encryptedPair;
 
 }
 
@@ -94,4 +169,5 @@ void MerkleCli::run(){
   prepareBuffs();
   chooseKey();
   getChosenBuff();
+  bruteforceKey();
 }

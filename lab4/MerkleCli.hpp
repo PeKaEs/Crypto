@@ -28,6 +28,7 @@ FILE* puzzleFile;
 void prepareBuffs();
 void chooseKey();
 void getChosenBuff();
+void bruteforceKey();
 
 public:
 

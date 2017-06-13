@@ -51,6 +51,9 @@ print IVlist
 
 for i in range(16):
     IV3[i] = chr(ord(IV3[i]) ^ ord(IVlist[i]))
+    IV3[i] = chr(ord(IV3[i]) ^ ord(IV[i]))
+
+
 
 choosenPlain = "".join(IV3)
 

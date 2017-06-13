@@ -123,10 +123,8 @@ void  MerkleCli::bruteforceKey(){
     for(uint i = 0; i < 4; ++i){
       endConstVal[i] = (uPreamble[4] >> (24-( i*8 ))) & 0xFF;
     }
-
+unsigned long long int end = 4294967296;
     for(unsigned long long int i=0 ; i < pow(2,uPreamble[1]); ++i){
-
-      tempBuff = {0};
 
         for( uint j = 15 ; j > 15 - (uPreamble[1]/8) ; --j ){
           brokenKey[j] = (i >> (j * 8)) & 0xFF;
@@ -138,7 +136,7 @@ void  MerkleCli::bruteforceKey(){
       AES_cfb128_encrypt(encryptedPair, tempBuff, bytesBuffSize-16, &encKey, tmpIV, &num, AES_DECRYPT);
 
       for (uint j =  0; j < 4; ++j){
-        std::cout<<"kurr"<<std::endl;
+
         if (tempBuff[j+(bytesBuffSize-16-4)] != endConstVal[j])
             break;
         if (j == 3)
@@ -149,6 +147,8 @@ void  MerkleCli::bruteforceKey(){
       memcpy(tmpIV ,ivec,sizeof(tmpIV));
       num = 0;
 
+      if(i%(end/100) == 0)
+        std::cout<<i%(end/10)<<"%"<<std::endl;
 
 
       if ( decrypted ){

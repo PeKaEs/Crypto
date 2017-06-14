@@ -29,32 +29,19 @@ if(!fwrite(finalRow, 1, (4+ 4+ ( keysSize/8 )), pEnc)){
 
 */
 
-unsigned long long int uint_pow(uint base, uint exp)
-{
-    unsigned long long int result = 1;
-    while (exp)
-    {
-        if (exp & 1){
-           result *= (unsigned long long int)base;
-std::cout<<std::dec<<exp<<std::endl;
-}
-        exp /= 2;
-        base *= base;
-    }
-    return result;
-}
-
 MerkleCli::MerkleCli(){
   puzzleFile = fopen("default", "rb");
       if (puzzleFile == NULL) {fputs ("Exange file fault, check path\n",stderr); exit (1);}
 
   prepareBuffs();
+  keyCracked = keyChosen = false;
 }
 
 MerkleCli::MerkleCli(std::string fileName){
   puzzleFile = fopen(fileName.c_str(), "rb");
       if (puzzleFile == NULL) {fputs ("Exange file fault, check path\n",stderr); exit (1);}
-
+  prepareBuffs();
+  keyCracked = keyChosen = false;
 }
 
 MerkleCli::~MerkleCli(){
@@ -90,6 +77,7 @@ void MerkleCli::chooseKey(){
   std::uniform_int_distribution<uint> dis(0x0, pow(2,uPreamble[0]));
 
   chosenKey = dis(gen);
+  keyChosen = true;
 }
 
 void MerkleCli::getChosenBuff(){
@@ -99,10 +87,6 @@ void MerkleCli::getChosenBuff(){
   n0OfVal = fread(buffer, 1, bytesBuffSize, puzzleFile);
       if (n0OfVal < bytesBuffSize){fputs ("Not enough key data to read\n",stderr); exit (2);}
 
-  //for(uint i = 0; i<bytesBuffSize ; ++i){
-    //std::cout<<std::hex<<buffer[i];
-  //}
-  //std::cout<<""<<std::endl;
 }
 
 void  MerkleCli::bruteforceKey(){
@@ -113,8 +97,9 @@ void  MerkleCli::bruteforceKey(){
     bool decrypted = false;
     AES_KEY encKey;
     int num = 0;
+    uint byteShift = 0;
     uint perc = 0;
-    unsigned long long int sizeOfKeySpace = uint_pow(2,uPreamble[1]);
+    unsigned long long int end = pow(2,uPreamble[1]);//4294967296;
 
     memcpy(ivec,buffer,sizeof(ivec));
     memcpy(tmpIV ,ivec,sizeof(ivec));
@@ -123,13 +108,15 @@ void  MerkleCli::bruteforceKey(){
     for(uint i = 0; i < 4; ++i){
       endConstVal[i] = (uPreamble[4] >> (24-( i*8 ))) & 0xFF;
     }
-unsigned long long int end = 4294967296;
+
+
     for(unsigned long long int i=0 ; i < pow(2,uPreamble[1]); ++i){
 
-        for( uint j = 15 ; j > 15 - (uPreamble[1]/8) ; --j ){
-          brokenKey[j] = (i >> (j * 8)) & 0xFF;
-          }
-
+      byteShift = 0;
+      for( uint j = 15 ; j > 15 - (uPreamble[1]/8) ; --j ){
+        brokenKey[j] = (i >> (byteShift * 8)) & 0xFF;
+        byteShift++;
+      }
 
       AES_set_encrypt_key(brokenKey, 128, &encKey);
 
@@ -147,11 +134,15 @@ unsigned long long int end = 4294967296;
       memcpy(tmpIV ,ivec,sizeof(tmpIV));
       num = 0;
 
-      if(i%(end/100) == 0)
-        std::cout<<i%(end/10)<<"%"<<std::endl;
-
+      if(i%(end/10) == 0)
+        {std::cout<<std::dec<<perc<<"%"<<std::endl;perc += 10;}
 
       if ( decrypted ){
+
+        ID = ((tempBuff[0])|(tempBuff[1]<<8)|(tempBuff[2]<<16)|(tempBuff[3]<<24));
+        memcpy(currKey ,tempBuff + uPreamble[3],sizeof(currKey));
+        keyCracked =  true;
+
         for(uint j = 0; j<bytesBuffSize-16; ++j){
           std::cout<<tempBuff[j];
         }
@@ -166,8 +157,28 @@ unsigned long long int end = 4294967296;
 }
 
 void MerkleCli::run(){
-  prepareBuffs();
   chooseKey();
   getChosenBuff();
   bruteforceKey();
+}
+
+std::vector<unsigned char> MerkleCli::getKey(){
+
+  std::vector<unsigned char> retKey;
+
+  if( !keyCracked )
+    return std::vector<unsigned char>();
+
+  for ( uint i = 0; i< sizeof(currKey); ++i){
+    retKey.push_back(currKey[i]);
+  }
+
+  return retKey;
+}
+
+uint MerkleCli::getChosenKeyID(){
+  if (keyChosen)
+    return ID;
+
+  return 0;
 }

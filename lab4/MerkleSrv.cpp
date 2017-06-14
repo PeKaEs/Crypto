@@ -7,6 +7,7 @@ MerkleSrv::MerkleSrv(){
   brokenCryptoKeySize = 24;
   finalRow = new unsigned char[(4+ 4+ ( keysSize/8 ))];//IDlenght(byte)+ConstVal(byte)+KeySize(byte)
   filePath = "default";
+  keysGenerated = false;
 
 }
 
@@ -29,10 +30,8 @@ MerkleSrv::MerkleSrv(unsigned int sysPow, unsigned int keyS, unsigned int broken
 
   filePath = fPath;
   finalRow = new unsigned char[(4+ 4+ ( keysSize/8 ))];
+  keysGenerated = false;
 
-  makePerm();
-  makeKeys();
-  encAndSave();
 }
 
 MerkleSrv::~MerkleSrv(){
@@ -93,8 +92,8 @@ uint perc = 0;
     memcpy(ivec ,&firIVpart,sizeof(firIVpart));
     memcpy(ivec+sizeof(secIVpart) ,&secIVpart,sizeof(secIVpart));//if a = 0xA00000000000000B; and  b = 0xC00000000000000D; then ivec = 0B 00 00 00 00 00 00 A0 0D 00 00 00 00 00 00 C0
 
-    for( uint i = 15 ; i > 15 - (brokenCryptoKeySize/8) ; --i ){
-      ckey[i] = disKey(genKey);
+    for( uint j = 15 ; j > 15 - (brokenCryptoKeySize/8) ; --j ){
+      ckey[j] = disKey(genKey);
     }
 
     AES_set_encrypt_key(ckey, 128, &encKey);
@@ -110,7 +109,7 @@ uint perc = 0;
     num = 0;
 
     if(i%(puzzleSize/10) == 0)
-      {std::cout<<"Encrypting/Saving keys: "<<perc<<"%"<<std::endl;perc+=10;}
+      {std::cout<<"Encrypting/Saving keys: "<<std::dec<<perc<<"%"<<std::endl;perc+=10;}
 
   }
 
@@ -143,16 +142,35 @@ void MerkleSrv::makeKeys(){
   std::uniform_int_distribution<unsigned char> dis(0x0, 0xFF);
 
 uint perc = 0;
+std::cout<<"Puzzlesize :"<<std::dec<<puzzleSize<<std::endl;
   for( uint i = 0; i < puzzleSize; ++i ){
 
     if ( (keysSize/8) * i > 300 )
       gen.seed(rd());
 
     if(i%(puzzleSize/10) == 0)
-      {std::cout<<"Creating keys: "<<perc<<"%"<<std::endl;perc+=10;}
+      {std::cout<<"Creating keys: "<<std::dec<<perc<<"%"<<std::endl;perc+=10;}
 
     valKeyMap.insert( std::pair< uint, std::vector<unsigned char> > ( i, std::vector<unsigned char>() ) );
     for ( uint j = 0; j < keysSize/8; ++j )
         valKeyMap[i].push_back( dis(gen) );
   }
+}
+
+void MerkleSrv::generatePuzzle(){
+  makePerm();
+  makeKeys();
+  encAndSave();
+  keysGenerated = true;
+}
+std::vector<unsigned char> MerkleSrv::getKey(uint ID){
+
+  std::vector<unsigned char>  retKey;
+    if(!keysGenerated)
+      return std::vector<unsigned char>();
+
+    if(!valKeyMap.count( ID ))
+      return retKey;
+
+    return valKeyMap[ID];
 }

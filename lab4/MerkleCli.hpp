@@ -19,6 +19,8 @@ std::random_device rd;  //Will be used to obtain a seed for the random number en
 uint uPreamble[5]; //{n, brokenCryptoKeySize, keysSize, IDsize, constValue};
 uint chosenKey;
 uint bytesBuffSize;
+uint ID;
+bool keyCracked, keyChosen;
 
 unsigned char* currKey;
 unsigned char* buffer;
@@ -38,6 +40,8 @@ MerkleCli(std::string fileName);
 
 void run();
 void info();
+std::vector<unsigned char>getKey();
+uint getChosenKeyID();
 
 };
 

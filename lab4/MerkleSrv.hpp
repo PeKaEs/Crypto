@@ -18,6 +18,7 @@ unsigned int n;
 unsigned int keysSize;
 unsigned int brokenCryptoKeySize;
 uint puzzleSize;
+bool keysGenerated;
 
 std::vector <uint> valKeyPosPerm;
 std::map <uint,std::vector<unsigned char>> valKeyMap;
@@ -37,6 +38,8 @@ public:
   MerkleSrv();
   ~MerkleSrv();
   MerkleSrv(unsigned int sysPow, unsigned int keyS, unsigned int brokenKeyS, std::string fPath);
+  void generatePuzzle();
+  std::vector<unsigned char> getKey(uint ID);
 };
 
 #endif
